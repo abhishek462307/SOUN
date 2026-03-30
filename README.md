@@ -341,3 +341,11 @@ Soun is not just a system—it is the transition of the internet from informatio
 ## 🚀 CLOSING LINE
 
 “From one node executing actions… to a world where billions of agents transact autonomously.”
+
+---
+
+## 📄 License
+
+This project is licensed under the **PolyForm Noncommercial License 1.0.0**. 
+
+It is open source for non-commercial use, personal study, research, and use by non-profit organizations. Commercial use requires a separate license. See the [LICENSE](LICENSE) file for the full text.

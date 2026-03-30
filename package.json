@@ -1,8 +1,9 @@
 {
   "name": "project-soun",
   "version": "1.0.0",
-  "description": "Universal Execution Protocol for AI Agents",
-  "main": "dist/index.js",
+    "description": "Universal Execution Protocol for AI Agents",
+    "license": "PolyForm-Noncommercial-1.0.0",
+    "main": "dist/index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc",
