@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT SOUN — AI Execution Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Space+Grotesk', sans-serif; background-color: #0a0a0c; color: #e2e8f0; }
+        .card { background: #141418; border: 1px solid #2d2d35; border-radius: 12px; transition: all 0.2s; }
+        .card:hover { border-color: #4f46e5; transform: translateY(-2px); }
+        .badge { padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+        .badge-success { background: #065f46; color: #34d399; }
+        .badge-fail { background: #7f1d1d; color: #f87171; }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-12 flex justify-between items-center">
+            <div>
+                <h1 class="text-4xl font-bold text-white mb-2">PROJECT SOUN</h1>
+                <p class="text-slate-400">Universal Execution Protocol for AI Agents — Monitoring Dashboard</p>
+            </div>
+            <div id="auth-status" class="text-right">
+                <input type="password" id="api-key" placeholder="Enter X-SOUN-API-KEY" class="bg-slate-900 border border-slate-700 px-4 py-2 rounded-lg text-sm focus:outline-none focus:border-indigo-500 w-64">
+                <button onclick="refresh()" class="ml-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">Refresh</button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12" id="metrics-summary">
+            <!-- Metrics will be injected here -->
+        </div>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6 flex items-center">
+                <span class="mr-3">💰</span> Economy (Wallets)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="wallets-list">
+                <!-- Wallets will be injected here -->
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6 flex items-center">
+                <span class="mr-3">🕸️</span> Register a Website
+            </h2>
+            <div class="card p-6 flex items-center space-x-4">
+                <input type="text" id="crawl-url" placeholder="https://example.com" class="flex-1 bg-slate-900 border border-slate-700 px-4 py-2 rounded-lg focus:outline-none focus:border-indigo-500">
+                <button onclick="crawlWebsite()" id="crawl-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-2 rounded-lg font-medium transition-colors">Crawl & Register</button>
+            </div>
+            <p id="crawl-status" class="mt-4 text-sm text-slate-500 italic"></p>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6 flex items-center">
+                <span class="mr-3">🤖</span> Agent Identities
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="agents-list">
+                <!-- Agents will be injected here -->
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6 flex items-center">
+                <span class="mr-3">🌐</span> Peer Nodes
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="peers-list">
+                <!-- Peers will be injected here -->
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6 flex items-center">
+                <span class="mr-3">⛓️</span> Blockchain Explorer
+            </h2>
+            <div class="card p-6">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div id="chain-status" class="badge badge-success px-4 py-2">Chain Valid</div>
+                    <div id="chain-height" class="text-slate-400 text-sm font-mono">Height: 0</div>
+                </div>
+                <div class="space-y-4" id="blockchain-list">
+                    <!-- Blocks will be injected here -->
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6 flex items-center">
+                <span class="mr-3">🚀</span> Registered Actions
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="actions-list">
+                <!-- Actions will be injected here -->
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-semibold mb-6 flex items-center">
+                <span class="mr-3">📜</span> Execution Logs
+            </h2>
+            <div class="card overflow-hidden">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-900 text-slate-400 uppercase font-semibold">
+                        <tr>
+                            <th class="px-6 py-4">Timestamp</th>
+                            <th class="px-6 py-4">Action</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4">Latency</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logs-body">
+                        <!-- Logs will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const getHeaders = () => ({
+            'Content-Type': 'application/json',
+            'X-SOUN-API-KEY': document.getElementById('api-key').value || 'soun_admin_key'
+        });
+
+        async function crawlWebsite() {
+            const url = document.getElementById('crawl-url').value;
+            const status = document.getElementById('crawl-status');
+            const btn = document.getElementById('crawl-btn');
+            
+            if (!url) return alert('Enter a website URL');
+            
+            status.textContent = 'Crawling ' + url + '...';
+            btn.disabled = true;
+            
+            try {
+                const res = await fetch('/api/crawl', {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify({ url })
+                });
+                const result = await res.json();
+                status.textContent = result.message;
+                if (result.success) {
+                    refresh();
+                    document.getElementById('crawl-url').value = '';
+                }
+            } catch (err) {
+                status.textContent = 'Failed to connect to node.';
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function refresh() {
+            try {
+                const headers = getHeaders();
+                const [metricsRes, actionsRes, logsRes, peersRes, agentsRes, walletsRes, bcRes] = await Promise.all([
+                    fetch('/api/metrics', { headers }),
+                    fetch('/api/actions', { headers }),
+                    fetch('/api/logs', { headers }),
+                    fetch('/api/peers', { headers }),
+                    fetch('/api/agents', { headers }),
+                    fetch('/api/wallets', { headers }),
+                    fetch('/api/blockchain', { headers })
+                ]);
+
+                if (metricsRes.status === 401) {
+                    alert('Invalid API Key');
+                    return;
+                }
+
+                const metrics = await metricsRes.json();
+                const { actions } = await actionsRes.json();
+                const { logs } = await logsRes.json();
+                const { peers } = await peersRes.json();
+                const { agents } = await agentsRes.json();
+                const { wallets } = await walletsRes.json();
+                const blockchain = await bcRes.json();
+
+                renderMetrics(metrics);
+                renderActions(actions);
+                renderLogs(logs);
+                renderPeers(peers);
+                renderAgents(agents);
+                renderWallets(wallets);
+                renderBlockchain(blockchain);
+            } catch (err) {
+                console.error('Refresh failed:', err);
+            }
+        }
+
+        function renderMetrics(m) {
+            const container = document.getElementById('metrics-summary');
+            container.innerHTML = `
+                <div class="card p-6">
+                    <p class="text-slate-400 text-sm mb-1">Success Rate</p>
+                    <p class="text-3xl font-bold">${(m.success_rate * 100).toFixed(1)}%</p>
+                </div>
+                <div class="card p-6">
+                    <p class="text-slate-400 text-sm mb-1">Avg Latency</p>
+                    <p class="text-3xl font-bold">${m.average_latency.toFixed(0)}ms</p>
+                </div>
+                <div class="card p-6">
+                    <p class="text-slate-400 text-sm mb-1">Total Executions</p>
+                    <p class="text-3xl font-bold">${m.total_executions}</p>
+                </div>
+                <div class="card p-6">
+                    <p class="text-slate-400 text-sm mb-1">Total Blocks</p>
+                    <p id="total-blocks-metric" class="text-3xl font-bold text-indigo-400">0</p>
+                </div>
+            `;
+        }
+
+        function renderActions(actions) {
+            const container = document.getElementById('actions-list');
+            container.innerHTML = actions.map(a => `
+                <div class="card p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-white truncate mr-2">${a.name}</h3>
+                        <span class="badge ${a.trust_score > 0.7 ? 'badge-success' : 'badge-fail'}">
+                            ${(a.trust_score * 100).toFixed(0)}% Trust
+                        </span>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4 h-10 overflow-hidden">${a.description || 'No description'}</p>
+                    <div class="flex justify-between text-xs text-slate-500">
+                        <span>${a.provider}</span>
+                        <span>${a.type.toUpperCase()}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPeers(peers) {
+            const container = document.getElementById('peers-list');
+            if (peers.length === 0) {
+                container.innerHTML = '<p class="text-slate-500 italic col-span-4">No peers connected to this node.</p>';
+                return;
+            }
+            container.innerHTML = peers.map(p => `
+                <div class="card p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-white font-medium text-sm truncate">${p.id}</span>
+                        <div class="w-2 h-2 rounded-full ${p.status === 'online' ? 'bg-green-500' : 'bg-red-500'}"></div>
+                    </div>
+                    <p class="text-xs text-slate-500 truncate">${p.url}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderAgents(agents) {
+            const container = document.getElementById('agents-list');
+            if (agents.length === 0) {
+                container.innerHTML = '<p class="text-slate-500 italic col-span-4">No agents registered on this node.</p>';
+                return;
+            }
+            container.innerHTML = agents.map(a => `
+                <div class="card p-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-white font-medium text-sm truncate">${a.name}</span>
+                        <span class="badge ${a.trust_score > 0.7 ? 'badge-success' : 'badge-fail'}">
+                            ${(a.trust_score * 100).toFixed(0)}%
+                        </span>
+                    </div>
+                    <p class="text-[10px] text-slate-600 mb-2 truncate">${a.agent_id}</p>
+                    <div class="flex justify-between text-[10px] text-slate-500">
+                        <span>Execs: ${a.total_executions}</span>
+                        <span>SR: ${(a.success_rate * 100).toFixed(0)}%</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderWallets(wallets) {
+            const container = document.getElementById('wallets-list');
+            if (wallets.length === 0) {
+                container.innerHTML = '<p class="text-slate-500 italic col-span-4">No wallet activity yet.</p>';
+                return;
+            }
+            container.innerHTML = wallets.map(w => `
+                <div class="card p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-white font-medium text-xs truncate">${w.id}</span>
+                    </div>
+                    <p class="text-lg font-bold text-indigo-400">${w.balance.toFixed(0)} ${w.currency}</p>
+                    <p class="text-[10px] text-slate-500">${w.transactions.length} Transactions</p>
+                </div>
+            `).join('');
+        }
+
+        function renderBlockchain(bc) {
+            const container = document.getElementById('blockchain-list');
+            const status = document.getElementById('chain-status');
+            const height = document.getElementById('chain-height');
+            const totalBlocksMetric = document.getElementById('total-blocks-metric');
+
+            status.textContent = bc.isValid ? 'Chain Valid' : 'Chain Compromised';
+            status.className = `badge ${bc.isValid ? 'badge-success' : 'badge-fail'} px-4 py-2`;
+            height.textContent = `Height: ${bc.chain.length}`;
+            if (totalBlocksMetric) totalBlocksMetric.textContent = bc.chain.length;
+
+            container.innerHTML = bc.chain.reverse().map(b => `
+                <div class="border-l-2 border-indigo-500 pl-6 py-4 relative">
+                    <div class="absolute -left-[9px] top-5 w-4 h-4 rounded-full bg-indigo-500"></div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-white font-bold">Block #${b.index}</span>
+                        <span class="text-slate-500 text-[10px] font-mono">${b.hash.substring(0, 16)}...</span>
+                    </div>
+                    <div class="text-[11px] text-slate-400 mb-2">
+                        Prev: <span class="font-mono">${b.previousHash.substring(0, 8)}...</span> | 
+                        Nonce: ${b.nonce} | 
+                        ${new Date(b.timestamp).toLocaleTimeString()}
+                    </div>
+                    <div class="bg-slate-900 rounded p-2 text-[10px] space-y-1">
+                        ${b.transactions.length === 0 ? '<span class="italic text-slate-600">Genesis Block</span>' : b.transactions.map(t => `
+                            <div class="flex justify-between">
+                                <span>${t.from.substring(0, 8)}... → ${t.to.substring(0, 8)}...</span>
+                                <span class="text-indigo-400 font-bold">${t.amount} SOUN</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderLogs(logs) {
+            const container = document.getElementById('logs-body');
+            container.innerHTML = logs.reverse().map(l => `
+                <tr class="border-t border-slate-800">
+                    <td class="px-6 py-4 text-slate-500">${new Date(l.timestamp).toLocaleTimeString()}</td>
+                    <td class="px-6 py-4 font-medium text-white">${l.name}</td>
+                    <td class="px-6 py-4">
+                        <span class="badge ${l.status === 'success' ? 'badge-success' : 'badge-fail'}">
+                            ${l.status.toUpperCase()}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-slate-500">${l.latency_ms}ms</td>
+                </tr>
+            `).join('');
+        }
+
+        // Initial load
+        document.getElementById('api-key').value = 'soun_admin_key';
+        refresh();
+        setInterval(refresh, 5000);
+    </script>
+</body>
+</html>

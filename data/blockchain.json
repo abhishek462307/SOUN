@@ -1,0 +1,29 @@
+{
+  "chain": [
+    {
+      "index": 0,
+      "timestamp": 1774868319674,
+      "transactions": [],
+      "previousHash": "0",
+      "hash": "f2ca738fdb81f8e3aed41a3a0a7bd5677d2155402a83408a0a7e7f510fd8b30f",
+      "nonce": 0
+    }
+  ],
+  "pendingTransactions": [
+    {
+      "from": "GENESIS_REWARD",
+      "to": "did:soun:dc389667-73f",
+      "amount": 1000,
+      "type": "deposit",
+      "timestamp": 1774868320758
+    },
+    {
+      "from": "GENESIS_REWARD",
+      "to": "did:soun:c63d8fa3-8d4",
+      "amount": 1000,
+      "type": "deposit",
+      "timestamp": 1774868348694
+    }
+  ],
+  "difficulty": 2
+}

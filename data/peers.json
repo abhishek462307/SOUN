@@ -1,0 +1,12 @@
+[
+  {
+    "id": "peer_node_beta",
+    "url": "http://localhost:3002",
+    "status": "online",
+    "last_seen": 1774868320753,
+    "capabilities": [
+      "food",
+      "travel"
+    ]
+  }
+]
