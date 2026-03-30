@@ -1,224 +1,26 @@
 [
   {
-    "action_id": "act_edd2dcf8",
-    "name": "trust_test",
+    "action_id": "act_6f4a1d26",
+    "name": "schema_test",
     "provider": "test",
-    "type": "external",
-    "trust_score": 0.5,
-    "success_count": 1,
-    "failure_count": 1,
-    "latency": "low",
-    "cost": 10,
-    "last_execution": 1774868055539
-  },
-  {
-    "action_id": "act_2c2bafdb",
-    "name": "order_food",
-    "provider": "food_service",
     "type": "internal",
-    "trust_score": 0,
-    "success_count": 0,
-    "failure_count": 1,
-    "latency": "low",
-    "description": "Order your favorite food from local restaurants",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "item": {
-          "type": "string",
-          "description": "The food item to order"
-        },
-        "quantity": {
-          "type": "number",
-          "description": "How many to order",
-          "default": 1
-        }
-      },
-      "required": [
-        "item"
-      ]
-    },
-    "cost": 10,
-    "last_execution": 1774868320214
-  },
-  {
-    "action_id": "act_2420c2e4",
-    "name": "book_cab",
-    "provider": "external_ride_service",
-    "execution_url": "http://localhost:4000/book",
-    "type": "external",
-    "trust_score": 0,
-    "success_count": 0,
+    "trust_score": 0.3333333333333333,
+    "success_count": 1,
     "failure_count": 2,
     "latency": "low",
-    "description": "Book a ride through an external provider",
-    "cost": 10,
-    "last_execution": 1774868348666
-  },
-  {
-    "action_id": "act_9fe212f5",
-    "name": "shopify_create_order",
-    "provider": "shopify_store_main",
-    "type": "internal",
-    "trust_score": 0.5,
-    "success_count": 1,
-    "failure_count": 1,
-    "latency": "low",
-    "description": "Create a new order directly in Shopify",
     "parameters": {
       "type": "object",
       "properties": {
-        "product_id": {
-          "type": "string"
-        },
-        "quantity": {
+        "age": {
           "type": "number",
-          "minimum": 1
-        },
-        "customer_email": {
-          "type": "string",
-          "format": "email"
+          "minimum": 18
         }
       },
       "required": [
-        "product_id",
-        "quantity",
-        "customer_email"
+        "age"
       ]
     },
     "cost": 10,
-    "last_execution": 1774868348099
-  },
-  {
-    "action_id": "act_d648df21",
-    "name": "woo_create_order",
-    "provider": "woo_store_alpha",
-    "type": "internal",
-    "trust_score": 0.5,
-    "success_count": 0,
-    "failure_count": 0,
-    "latency": "low",
-    "description": "Create a new order in WooCommerce",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "sku": {
-          "type": "string"
-        },
-        "quantity": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "sku",
-        "quantity"
-      ]
-    },
-    "cost": 10
-  },
-  {
-    "action_id": "act_935ec615",
-    "name": "order_food",
-    "provider": "food_service",
-    "type": "internal",
-    "trust_score": 0,
-    "success_count": 0,
-    "failure_count": 1,
-    "latency": "low",
-    "description": "Order your favorite food from local restaurants",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "item": {
-          "type": "string",
-          "description": "The food item to order"
-        },
-        "quantity": {
-          "type": "number",
-          "description": "How many to order",
-          "default": 1
-        }
-      },
-      "required": [
-        "item"
-      ]
-    },
-    "cost": 10,
-    "last_execution": 1774868347921
-  },
-  {
-    "action_id": "act_ebbb6f78",
-    "name": "book_cab",
-    "provider": "external_ride_service",
-    "execution_url": "http://localhost:4000/book",
-    "type": "external",
-    "trust_score": 0,
-    "success_count": 0,
-    "failure_count": 1,
-    "latency": "low",
-    "description": "Book a ride through an external provider",
-    "cost": 10,
-    "last_execution": 1774868348660
-  },
-  {
-    "action_id": "act_ddbc76cc",
-    "name": "shopify_create_order",
-    "provider": "shopify_store_main",
-    "type": "internal",
-    "trust_score": 1,
-    "success_count": 1,
-    "failure_count": 0,
-    "latency": "low",
-    "description": "Create a new order directly in Shopify",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "product_id": {
-          "type": "string"
-        },
-        "quantity": {
-          "type": "number",
-          "minimum": 1
-        },
-        "customer_email": {
-          "type": "string",
-          "format": "email"
-        }
-      },
-      "required": [
-        "product_id",
-        "quantity",
-        "customer_email"
-      ]
-    },
-    "cost": 10,
-    "last_execution": 1774868348690
-  },
-  {
-    "action_id": "act_3ebcc9e9",
-    "name": "woo_create_order",
-    "provider": "woo_store_alpha",
-    "type": "internal",
-    "trust_score": 0.5,
-    "success_count": 0,
-    "failure_count": 0,
-    "latency": "low",
-    "description": "Create a new order in WooCommerce",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "sku": {
-          "type": "string"
-        },
-        "quantity": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "sku",
-        "quantity"
-      ]
-    },
-    "cost": 10
+    "last_execution": 1774868566638
   }
 ]

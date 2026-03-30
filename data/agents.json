@@ -1,34 +1,12 @@
 [
   {
-    "agent_id": "did:soun:530df7b0-75d",
+    "agent_id": "did:soun:46092b24-12b",
     "name": "Stat Agent",
     "status": "active",
     "trust_score": 0.45000000000000007,
     "total_executions": 2,
     "success_rate": 0.5,
-    "created_at": 1774868055533,
-    "last_active": 1774868055534
-  },
-  {
-    "agent_id": "did:soun:dc389667-73f",
-    "name": "Soun Explorer 1",
-    "organization": "OpenAI Research",
-    "status": "active",
-    "trust_score": 0.4,
-    "total_executions": 1,
-    "success_rate": 0,
-    "created_at": 1774868319677,
-    "last_active": 1774868320216
-  },
-  {
-    "agent_id": "did:soun:c63d8fa3-8d4",
-    "name": "Soun Explorer 1",
-    "organization": "OpenAI Research",
-    "status": "active",
-    "trust_score": 0.30000000000000004,
-    "total_executions": 2,
-    "success_rate": 0,
-    "created_at": 1774868346585,
-    "last_active": 1774868348109
+    "created_at": 1774868564086,
+    "last_active": 1774868564110
   }
 ]
