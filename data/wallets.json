@@ -1,19 +1,8 @@
 [
   {
-    "id": "did:soun:1c0c47cc-f7d",
+    "id": "did:soun:170cd4a6-e20",
     "balance": 1000,
     "currency": "SOUN",
-    "transactions": [
-      {
-        "id": "tx_pending_1774869502550",
-        "from": "GENESIS_REWARD",
-        "to": "did:soun:1c0c47cc-f7d",
-        "amount": 1000,
-        "currency": "SOUN",
-        "type": "deposit",
-        "status": "pending",
-        "timestamp": 1774869502550
-      }
-    ]
+    "transactions": []
   }
 ]

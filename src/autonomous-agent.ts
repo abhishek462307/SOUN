@@ -93,7 +93,7 @@ async function runAutonomousAgent() {
     console.log('🤖 [AGENT] Result from Soun:', JSON.stringify(response.data, null, 2));
     
     // Check Wallet
-    const wallet = paymentSystem.getOrCreateWallet(agent.agent_id);
+    const wallet = await paymentSystem.getOrCreateWallet(agent.agent_id);
     console.log(`🤖 [AGENT] Remaining Wallet Balance: ${wallet.balance} SOUN`);
   } else {
     console.log('\n❌ [AGENT] Task failed:', response.message);

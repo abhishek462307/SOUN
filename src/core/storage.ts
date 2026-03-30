@@ -8,6 +8,7 @@ export interface StorageProvider {
 
 export class JsonFileStorage implements StorageProvider {
   private baseDir: string;
+  private writeQueues: Map<string, Promise<void>> = new Map();
 
   constructor(baseDir: string = './data') {
     this.baseDir = baseDir;
@@ -22,9 +23,24 @@ export class JsonFileStorage implements StorageProvider {
   }
 
   public async save(key: string, data: any): Promise<void> {
-    await this.ensureDir();
-    const filePath = path.join(this.baseDir, `${key}.json`);
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2));
+    const currentQueue = this.writeQueues.get(key) || Promise.resolve();
+    
+    const newWrite = currentQueue.then(async () => {
+      await this.ensureDir();
+      const filePath = path.join(this.baseDir, `${key}.json`);
+      const tempPath = `${filePath}.${Math.random().toString(36).substring(2, 10)}.tmp`;
+      
+      try {
+        await fs.writeFile(tempPath, JSON.stringify(data, null, 2));
+        await fs.rename(tempPath, filePath);
+      } catch (err) {
+        try { await fs.unlink(tempPath); } catch (e) {}
+        throw err;
+      }
+    });
+
+    this.writeQueues.set(key, newWrite);
+    return newWrite;
   }
 
   public async load(key: string): Promise<any> {

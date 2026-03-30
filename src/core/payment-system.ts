@@ -21,7 +21,7 @@ export class PaymentSystem {
     await storage.save('wallets', Array.from(this.wallets.values()));
   }
 
-  public getOrCreateWallet(id: string): Wallet {
+  public async getOrCreateWallet(id: string): Promise<Wallet> {
     // We provide initial 1000 credits via a system transaction if the wallet doesn't exist
     let wallet = this.wallets.get(id);
     if (!wallet) {
@@ -36,7 +36,7 @@ export class PaymentSystem {
         type: 'deposit',
         timestamp: Date.now()
       };
-      blockchain.addTransaction(initialCredit);
+      await blockchain.addTransaction(initialCredit);
       
       wallet = {
         id,
@@ -45,7 +45,7 @@ export class PaymentSystem {
         transactions: []
       };
       this.wallets.set(id, wallet);
-      this.save();
+      await this.save();
     }
     
     // Always sync balance with blockchain

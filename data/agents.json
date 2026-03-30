@@ -1,24 +1,24 @@
 [
   {
-    "agent_id": "did:soun:1c0c47cc-f7d",
+    "agent_id": "did:soun:170cd4a6-e20",
     "name": "AutoBot-9000",
     "organization": "Autonomous Mesh",
     "status": "active",
     "trust_score": 0.55,
     "total_executions": 1,
     "success_rate": 1,
-    "created_at": 1774869502422,
-    "last_active": 1774869502582
+    "created_at": 1774869836826,
+    "last_active": 1774869836865
   },
   {
-    "agent_id": "did:soun:4776fc0e-47e",
+    "agent_id": "did:soun:89d7fc12-ca5",
     "name": "SubContractor-1",
     "organization": "Autonomous Mesh",
     "status": "active",
     "trust_score": 0.5,
     "total_executions": 0,
     "success_rate": 0,
-    "created_at": 1774869502586,
-    "last_active": 1774869502586
+    "created_at": 1774869836868,
+    "last_active": 1774869836868
   }
 ]

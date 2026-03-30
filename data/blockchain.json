@@ -2,37 +2,37 @@
   "chain": [
     {
       "index": 0,
-      "timestamp": 1774869502419,
+      "timestamp": 1774869836825,
       "transactions": [],
       "previousHash": "0",
-      "hash": "566fd485aae6883d0a72d10fcb5392123a28841b7d41bd42c1ce4b63700318ef",
+      "hash": "56faf6cce74953488ba1e6a03373ba0bba2660bba8d66db4698c2727bfadd2ac",
       "nonce": 0
     },
     {
       "index": 1,
-      "timestamp": 1774869502550,
+      "timestamp": 1774869836854,
       "transactions": [
         {
           "from": "GENESIS_REWARD",
-          "to": "did:soun:1c0c47cc-f7d",
+          "to": "did:soun:170cd4a6-e20",
           "amount": 1000,
           "currency": "SOUN",
           "type": "deposit",
-          "timestamp": 1774869502550
+          "timestamp": 1774869836854
         },
         {
-          "from": "did:soun:1c0c47cc-f7d",
+          "from": "did:soun:170cd4a6-e20",
           "to": "global_notify_inc",
           "amount": 25,
           "currency": "SOUN",
           "type": "execution_fee",
-          "action_id": "act_3114450d",
-          "timestamp": 1774869502550
+          "action_id": "act_82ad0af0",
+          "timestamp": 1774869836854
         }
       ],
-      "previousHash": "566fd485aae6883d0a72d10fcb5392123a28841b7d41bd42c1ce4b63700318ef",
-      "hash": "00546f22caa1aa17465d47f13f00bcb6eb132f1f95bd03c330b98a6fcfcbca29",
-      "nonce": 214
+      "previousHash": "56faf6cce74953488ba1e6a03373ba0bba2660bba8d66db4698c2727bfadd2ac",
+      "hash": "006b011a5512cf148740d72bdf4142229cf674e2c77ed2820240d3d054e5dbe9",
+      "nonce": 174
     }
   ],
   "pendingTransactions": [
@@ -42,17 +42,7 @@
       "amount": 5,
       "currency": "SOUN",
       "type": "miner_reward",
-      "timestamp": 1774869502577
-    }
-  ],
-  "difficulty": 2
-}m": "did:soun:1c0c47cc-f7d",
-      "to": "global_notify_inc",
-      "amount": 25,
-      "currency": "SOUN",
-      "type": "execution_fee",
-      "action_id": "act_3114450d",
-      "timestamp": 1774869502550
+      "timestamp": 1774869836856
     }
   ],
   "difficulty": 2

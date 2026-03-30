@@ -274,13 +274,13 @@ router.post('/crawl', async (req: Request, res: Response) => {
  *       200:
  *         description: Wallet details
  */
-router.get('/wallet', (req: Request, res: Response) => {
+router.get('/wallet', async (req: Request, res: Response) => {
   const apiKey = req.headers['x-soun-api-key'] as string;
   const agentId = authService.getAgentId(apiKey);
   
   if (!agentId) return res.status(401).json({ error: 'Agent not identified' });
   
-  const wallet = paymentSystem.getOrCreateWallet(agentId);
+  const wallet = await paymentSystem.getOrCreateWallet(agentId);
   res.json(wallet);
 });
 
@@ -315,7 +315,7 @@ router.post('/handshake', async (req: Request, res: Response) => {
     });
     
     // Provide initial "gas" reward on blockchain for self-onboarded agents
-    const wallet = paymentSystem.getOrCreateWallet(agent.agent_id);
+    const wallet = await paymentSystem.getOrCreateWallet(agent.agent_id);
 
     // Generate credentials (after DID is established)
     const apiKey = authService.generateKey(agent.agent_id);

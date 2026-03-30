@@ -51,9 +51,9 @@ export class Blockchain {
     return crypto.createHash('sha256').update(data).digest('hex');
   }
 
-  public addTransaction(transaction: TransactionData): void {
+  public async addTransaction(transaction: TransactionData): Promise<void> {
     this.pendingTransactions.push(transaction);
-    this.save();
+    await this.save();
   }
 
   public async minePendingTransactions(minerRewardAddress: string): Promise<Block> {
