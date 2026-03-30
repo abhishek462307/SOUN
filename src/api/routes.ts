@@ -9,6 +9,7 @@ import { websiteCrawler } from '../core/crawler';
 import { agentRegistry } from '../core/agent-registry';
 import { paymentSystem } from '../core/payment-system';
 import { blockchain } from '../core/blockchain';
+import { messagingProtocol } from '../core/messaging';
 import rateLimit, { ipKeyGenerator } from 'express-rate-limit';
 
 const router = express.Router();
@@ -281,6 +282,117 @@ router.get('/wallet', (req: Request, res: Response) => {
   
   const wallet = paymentSystem.getOrCreateWallet(agentId);
   res.json(wallet);
+});
+
+/**
+ * @openapi
+ * /api/handshake:
+ *   post:
+ *     summary: Self-onboarding handshake for agents
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [agent_name]
+ *             properties:
+ *               agent_name: { type: string }
+ *               organization: { type: string }
+ *     responses:
+ *       200:
+ *         description: Handshake successful, agent onboarded
+ */
+router.post('/handshake', async (req: Request, res: Response) => {
+  try {
+    const { agent_name, organization } = req.body;
+    if (!agent_name) return res.status(400).json({ error: 'agent_name is required' });
+
+    // Automated onboarding logic
+    const agent = await agentRegistry.register({ 
+      name: agent_name, 
+      organization: organization || 'Autonomous Mesh' 
+    });
+    
+    // Provide initial "gas" reward on blockchain for self-onboarded agents
+    const wallet = paymentSystem.getOrCreateWallet(agent.agent_id);
+
+    // Generate credentials (after DID is established)
+    const apiKey = authService.generateKey(agent.agent_id);
+
+    res.json({
+      status: 'onboarded',
+      identity: agent,
+      credentials: {
+        apiKey,
+        did: agent.agent_id
+      },
+      welcome_package: {
+        initial_balance: wallet.balance,
+        currency: wallet.currency,
+        message: 'Welcome to the SOUN Autonomous Mesh.'
+      },
+      network_manifest: '/.soun'
+    });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @openapi
+ * /api/messages:
+ *   get:
+ *     summary: Get agent inbox
+ *     responses:
+ *       200:
+ *         description: Inbox messages
+ */
+router.get('/messages', (req: Request, res: Response) => {
+  const apiKey = req.headers['x-soun-api-key'] as string;
+  const agentId = authService.getAgentId(apiKey);
+  if (!agentId) return res.status(401).json({ error: 'Agent not identified' });
+  
+  res.json({ inbox: messagingProtocol.getInbox(agentId) });
+});
+
+/**
+ * @openapi
+ * /api/messages/send:
+ *   post:
+ *     summary: Send message to another agent
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [to_did, subject, body]
+ *             properties:
+ *               to_did: { type: string }
+ *               subject: { type: string }
+ *               body: { type: object }
+ *     responses:
+ *       201:
+ *         description: Message sent
+ */
+router.post('/messages/send', async (req: Request, res: Response) => {
+  try {
+    const apiKey = req.headers['x-soun-api-key'] as string;
+    const fromDid = authService.getAgentId(apiKey);
+    if (!fromDid) return res.status(401).json({ error: 'Agent not identified' });
+
+    const message = await messagingProtocol.sendMessage(fromDid, req.body);
+    res.status(201).json(message);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Extra: Get all messages (for dashboard)
+router.get('/all-messages', (req: Request, res: Response) => {
+  // This would be admin-only in prod
+  res.json({ messages: messagingProtocol.getInbox('all') || [] });
 });
 
 // Extra: Get all wallets (for dashboard)

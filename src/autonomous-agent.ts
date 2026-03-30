@@ -2,6 +2,7 @@ import { registry } from './core/registry';
 import { agentRegistry } from './core/agent-registry';
 import { executionEngine } from './core/execution-engine';
 import { paymentSystem } from './core/payment-system';
+import { messagingProtocol } from './core/messaging';
 
 /**
  * SIMULATION: An Autonomous AI Agent using Project SOUN
@@ -18,9 +19,12 @@ async function runAutonomousAgent() {
   console.log('🤖 [AGENT] Initializing Autonomous Agent...');
   
   // 1. Setup Systems
-  await registry.initialize();
-  await agentRegistry.initialize();
-  await paymentSystem.initialize();
+  await Promise.all([
+    registry.initialize(),
+    agentRegistry.initialize(),
+    paymentSystem.initialize(),
+    messagingProtocol.initialize()
+  ]);
 
   // 2. Identity: Register the Agent
   const agent = await agentRegistry.register({
@@ -94,6 +98,19 @@ async function runAutonomousAgent() {
   } else {
     console.log('\n❌ [AGENT] Task failed:', response.message);
   }
+
+  // 6. A2A Messaging: Simulation of subcontracting
+  console.log('\n💬 [AGENT] Task requires subcontracting. Messaging another agent...');
+  const subAgent = await agentRegistry.register({ name: 'SubContractor-1', organization: 'Autonomous Mesh' });
+  
+  await messagingProtocol.sendMessage(agent.agent_id, {
+    to_did: subAgent.agent_id,
+    subject: 'Resource Verification',
+    body: { task_id: 'SOUN-123', status: 'requesting_verification' }
+  });
+  
+  const inbox = messagingProtocol.getInbox(subAgent.agent_id);
+  console.log(`🤖 [SUB-AGENT] Received message: "${inbox[0].subject}" from ${inbox[0].from_did}`);
 
   console.log('\n🏁 [AGENT] Agent loop finished.');
 }

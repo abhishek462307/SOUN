@@ -4,6 +4,7 @@ import { SOUN_MANIFEST } from './core/discovery';
 import { registry } from './core/registry';
 import { agentRegistry } from './core/agent-registry';
 import { paymentSystem } from './core/payment-system';
+import { messagingProtocol } from './core/messaging';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 
@@ -66,7 +67,8 @@ async function start() {
   await Promise.all([
     registry.initialize(),
     agentRegistry.initialize(),
-    paymentSystem.initialize()
+    paymentSystem.initialize(),
+    messagingProtocol.initialize()
   ]);
   app.listen(port, () => {
     console.log(`[PROJECT SOUN] Server is running on port ${port}`);

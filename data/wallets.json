@@ -1,77 +1,18 @@
 [
   {
-    "id": "did:soun:c0dcc6be-fd1",
-    "balance": 990,
-    "currency": "SOUN",
-    "transactions": [
-      {
-        "id": "tx_59937c10-9fa",
-        "from": "did:soun:c0dcc6be-fd1",
-        "to": "food_service",
-        "amount": 10,
-        "currency": "SOUN",
-        "type": "execution_fee",
-        "status": "completed",
-        "action_id": "act_b814f856",
-        "timestamp": 1774867799008
-      }
-    ]
-  },
-  {
-    "id": "food_service",
-    "balance": 1010,
-    "currency": "SOUN",
-    "transactions": [
-      {
-        "id": "tx_59937c10-9fa",
-        "from": "did:soun:c0dcc6be-fd1",
-        "to": "food_service",
-        "amount": 10,
-        "currency": "SOUN",
-        "type": "execution_fee",
-        "status": "completed",
-        "action_id": "act_b814f856",
-        "timestamp": 1774867799008
-      }
-    ]
-  },
-  {
-    "id": "did:soun:dc389667-73f",
-    "balance": 0,
-    "currency": "SOUN",
-    "transactions": []
-  },
-  {
-    "id": "did:soun:c63d8fa3-8d4",
+    "id": "did:soun:1c0c47cc-f7d",
     "balance": 1000,
     "currency": "SOUN",
     "transactions": [
       {
-        "id": "tx_pending_1774868348694",
+        "id": "tx_pending_1774869502550",
         "from": "GENESIS_REWARD",
-        "to": "did:soun:c63d8fa3-8d4",
+        "to": "did:soun:1c0c47cc-f7d",
         "amount": 1000,
         "currency": "SOUN",
         "type": "deposit",
         "status": "pending",
-        "timestamp": 1774868348694
-      }
-    ]
-  },
-  {
-    "id": "did:soun:5b0ae2e9-02b",
-    "balance": 1000,
-    "currency": "SOUN",
-    "transactions": [
-      {
-        "id": "tx_pending_1774868886221",
-        "from": "GENESIS_REWARD",
-        "to": "did:soun:5b0ae2e9-02b",
-        "amount": 1000,
-        "currency": "SOUN",
-        "type": "deposit",
-        "status": "pending",
-        "timestamp": 1774868886221
+        "timestamp": 1774869502550
       }
     ]
   }

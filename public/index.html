@@ -54,6 +54,17 @@
 
         <section class="mb-12">
             <h2 class="text-2xl font-semibold mb-6 flex items-center">
+                <span class="mr-3">💬</span> Network Messages (A2A)
+            </h2>
+            <div class="card p-6">
+                <div class="space-y-4" id="messages-list">
+                    <!-- Messages will be injected here -->
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6 flex items-center">
                 <span class="mr-3">🤖</span> Agent Identities
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="agents-list">
@@ -154,14 +165,15 @@
         async function refresh() {
             try {
                 const headers = getHeaders();
-                const [metricsRes, actionsRes, logsRes, peersRes, agentsRes, walletsRes, bcRes] = await Promise.all([
+                const [metricsRes, actionsRes, logsRes, peersRes, agentsRes, walletsRes, bcRes, msgRes] = await Promise.all([
                     fetch('/api/metrics', { headers }),
                     fetch('/api/actions', { headers }),
                     fetch('/api/logs', { headers }),
                     fetch('/api/peers', { headers }),
                     fetch('/api/agents', { headers }),
                     fetch('/api/wallets', { headers }),
-                    fetch('/api/blockchain', { headers })
+                    fetch('/api/blockchain', { headers }),
+                    fetch('/api/all-messages', { headers })
                 ]);
 
                 if (metricsRes.status === 401) {
@@ -176,6 +188,7 @@
                 const { agents } = await agentsRes.json();
                 const { wallets } = await walletsRes.json();
                 const blockchain = await bcRes.json();
+                const { messages } = await msgRes.json();
 
                 renderMetrics(metrics);
                 renderActions(actions);
@@ -184,6 +197,7 @@
                 renderAgents(agents);
                 renderWallets(wallets);
                 renderBlockchain(blockchain);
+                renderMessages(messages);
             } catch (err) {
                 console.error('Refresh failed:', err);
             }
@@ -335,6 +349,30 @@
                     </td>
                     <td class="px-6 py-4 text-slate-500">${l.latency_ms}ms</td>
                 </tr>
+            `).join('');
+        }
+
+        function renderMessages(messages) {
+            const container = document.getElementById('messages-list');
+            if (!messages || messages.length === 0) {
+                container.innerHTML = '<p class="text-slate-500 italic">No network messages exchanged.</p>';
+                return;
+            }
+            container.innerHTML = messages.reverse().map(m => `
+                <div class="border-b border-slate-800 pb-4 last:border-0 last:pb-0">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-indigo-400 font-bold text-sm">${m.subject}</span>
+                        <span class="text-slate-500 text-[10px]">${new Date(m.timestamp).toLocaleTimeString()}</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-[10px] text-slate-500 mb-2">
+                        <span class="truncate max-w-[150px]">${m.from_did}</span>
+                        <span>→</span>
+                        <span class="truncate max-w-[150px]">${m.to_did}</span>
+                    </div>
+                    <div class="bg-slate-900 rounded p-2 text-[11px] text-slate-300 font-mono">
+                        ${typeof m.body === 'object' ? JSON.stringify(m.body) : m.body}
+                    </div>
+                </div>
             `).join('');
         }
 

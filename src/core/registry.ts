@@ -54,6 +54,10 @@ export class Registry {
     cost?: number;
     handler?: (input: any) => Promise<any> 
   }): Promise<Action> {
+    // Check if an action with this name and provider already exists to prevent duplicates in dev
+    const existing = this.actions.find(a => a.name === data.name && a.provider === data.provider);
+    if (existing) return existing;
+
     const action: Action = {
       action_id: `act_${uuidv4().substring(0, 8)}`,
       name: data.name,
@@ -168,9 +172,36 @@ export class Registry {
   }
 
   private calculateRelevance(action: Action, intent: string): number {
-    if (action.name.toLowerCase() === intent.toLowerCase()) return 1.0;
-    if (action.name.toLowerCase().includes(intent.toLowerCase())) return 0.8;
-    return 0.5;
+    const actionName = action.name.toLowerCase();
+    const actionDesc = (action.description || '').toLowerCase();
+    const query = intent.toLowerCase();
+
+    // 1. Exact/Substring matches (Standard)
+    if (actionName === query) return 1.0;
+    if (actionName.includes(query) || query.includes(actionName)) return 0.9;
+
+    // 2. Semantic/Synonym Simulation (Mocking Embedding Logic)
+    const semanticMap: Record<string, string[]> = {
+      'order': ['buy', 'purchase', 'get', 'shop', 'acquire'],
+      'food': ['pizza', 'meal', 'lunch', 'dinner', 'groceries', 'restaurant'],
+      'ride': ['cab', 'taxi', 'transport', 'car', 'travel'],
+      'notify': ['message', 'alert', 'send', 'warn', 'slack', 'sms'],
+      'inventory': ['stock', 'check', 'availability', 'items']
+    };
+
+    let semanticScore = 0;
+    const queryWords = query.split(' ');
+    
+    for (const [key, synonyms] of Object.entries(semanticMap)) {
+      const hasKey = queryWords.includes(key) || synonyms.some(s => queryWords.includes(s));
+      const actionMatches = actionName.includes(key) || actionDesc.includes(key) || synonyms.some(s => actionName.includes(s));
+      
+      if (hasKey && actionMatches) {
+        semanticScore += 0.7;
+      }
+    }
+
+    return Math.min(1.0, Math.max(0.5, semanticScore));
   }
 
   public async updateActionTrust(action_id: string, delta: number): Promise<void> {

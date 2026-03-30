@@ -88,6 +88,7 @@ export class Blockchain {
         from: 'SYSTEM',
         to: minerRewardAddress,
         amount: 5, // Reward for mining
+        currency: 'SOUN',
         type: 'miner_reward',
         timestamp: Date.now()
       }
@@ -120,26 +121,30 @@ export class Blockchain {
     return this.pendingTransactions;
   }
 
-  public getBalance(address: string): number {
+  public getBalance(address: string, currency: string = 'SOUN'): number {
     let balance = 0;
     // Check confirmed chain
     for (const block of this.chain) {
       for (const trans of block.transactions) {
+        if (trans.currency === currency) {
+          if (trans.from === address) {
+            balance -= trans.amount;
+          }
+          if (trans.to === address) {
+            balance += trans.amount;
+          }
+        }
+      }
+    }
+    // Check pending transactions
+    for (const trans of this.pendingTransactions) {
+      if (trans.currency === currency) {
         if (trans.from === address) {
           balance -= trans.amount;
         }
         if (trans.to === address) {
           balance += trans.amount;
         }
-      }
-    }
-    // Check pending transactions
-    for (const trans of this.pendingTransactions) {
-      if (trans.from === address) {
-        balance -= trans.amount;
-      }
-      if (trans.to === address) {
-        balance += trans.amount;
       }
     }
     return balance;

@@ -2,6 +2,7 @@ export interface TransactionData {
   from: string;
   to: string;
   amount: number;
+  currency: string; // Added for multi-currency support
   type: string;
   action_id?: string;
   timestamp: number;

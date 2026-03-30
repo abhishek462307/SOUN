@@ -2,80 +2,57 @@
   "chain": [
     {
       "index": 0,
-      "timestamp": 1774868319674,
+      "timestamp": 1774869502419,
       "transactions": [],
       "previousHash": "0",
-      "hash": "f2ca738fdb81f8e3aed41a3a0a7bd5677d2155402a83408a0a7e7f510fd8b30f",
+      "hash": "566fd485aae6883d0a72d10fcb5392123a28841b7d41bd42c1ce4b63700318ef",
       "nonce": 0
     },
     {
       "index": 1,
-      "timestamp": 1774868886222,
+      "timestamp": 1774869502550,
       "transactions": [
         {
           "from": "GENESIS_REWARD",
-          "to": "did:soun:dc389667-73f",
+          "to": "did:soun:1c0c47cc-f7d",
           "amount": 1000,
+          "currency": "SOUN",
           "type": "deposit",
-          "timestamp": 1774868320758
+          "timestamp": 1774869502550
         },
         {
-          "from": "GENESIS_REWARD",
-          "to": "did:soun:c63d8fa3-8d4",
-          "amount": 1000,
-          "type": "deposit",
-          "timestamp": 1774868348694
-        },
-        {
-          "from": "GENESIS_REWARD",
-          "to": "did:soun:5b0ae2e9-02b",
-          "amount": 1000,
-          "type": "deposit",
-          "timestamp": 1774868886221
-        },
-        {
-          "from": "did:soun:5b0ae2e9-02b",
+          "from": "did:soun:1c0c47cc-f7d",
           "to": "global_notify_inc",
           "amount": 25,
+          "currency": "SOUN",
           "type": "execution_fee",
-          "action_id": "act_5826b3c0",
-          "timestamp": 1774868886222
+          "action_id": "act_3114450d",
+          "timestamp": 1774869502550
         }
       ],
-      "previousHash": "f2ca738fdb81f8e3aed41a3a0a7bd5677d2155402a83408a0a7e7f510fd8b30f",
-      "hash": "0051e2822ca21264e5511d07b01c72be24c64c45ba18ee5f8f754fab6a41962d",
-      "nonce": 133
+      "previousHash": "566fd485aae6883d0a72d10fcb5392123a28841b7d41bd42c1ce4b63700318ef",
+      "hash": "00546f22caa1aa17465d47f13f00bcb6eb132f1f95bd03c330b98a6fcfcbca29",
+      "nonce": 214
     }
   ],
   "pendingTransactions": [
     {
-      "from": "GENESIS_REWARD",
-      "to": "did:soun:dc389667-73f",
-      "amount": 1000,
-      "type": "deposit",
-      "timestamp": 1774868320758
-    },
-    {
-      "from": "GENESIS_REWARD",
-      "to": "did:soun:c63d8fa3-8d4",
-      "amount": 1000,
-      "type": "deposit",
-      "timestamp": 1774868348694
-    },
-    {
-      "from": "GENESIS_REWARD",
-      "to": "did:soun:5b0ae2e9-02b",
-      "amount": 1000,
-      "type": "deposit",
-      "timestamp": 1774868886221
-    },
-    {
-      "from": "did:soun:5b0ae2e9-02b",
+      "from": "SYSTEM",
+      "to": "NODE_OPERATOR_REWARD",
+      "amount": 5,
+      "currency": "SOUN",
+      "type": "miner_reward",
+      "timestamp": 1774869502577
+    }
+  ],
+  "difficulty": 2
+}m": "did:soun:1c0c47cc-f7d",
       "to": "global_notify_inc",
       "amount": 25,
+      "currency": "SOUN",
       "type": "execution_fee",
-      "action_id": "act_5826b3c0",
-      "timestamp": 1774868886222
+      "action_id": "act_3114450d",
+      "timestamp": 1774869502550
     }
   ],
   "difficulty": 2

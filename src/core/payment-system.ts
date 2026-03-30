@@ -32,6 +32,7 @@ export class PaymentSystem {
         from: 'GENESIS_REWARD',
         to: id,
         amount: 1000,
+        currency: 'SOUN',
         type: 'deposit',
         timestamp: Date.now()
       };
@@ -67,7 +68,7 @@ export class PaymentSystem {
             from: t.from,
             to: t.to,
             amount: t.amount,
-            currency: 'SOUN',
+            currency: t.currency || 'SOUN',
             type: t.type as any,
             status: 'completed',
             action_id: t.action_id,
@@ -84,7 +85,7 @@ export class PaymentSystem {
           from: t.from,
           to: t.to,
           amount: t.amount,
-          currency: 'SOUN',
+          currency: t.currency || 'SOUN',
           type: t.type as any,
           status: 'pending',
           action_id: t.action_id,
@@ -110,6 +111,7 @@ export class PaymentSystem {
       from: agentId,
       to: providerId,
       amount,
+      currency: 'SOUN',
       type: 'execution_fee',
       action_id: actionId,
       timestamp: Date.now()
@@ -123,6 +125,20 @@ export class PaymentSystem {
 
     console.log(`[Blockchain Payment] Execution Fee: ${amount} SOUN from ${agentId} to ${providerId} (Block Mined)`);
     return true;
+  }
+
+  public async deposit(agentId: string, amount: number, currency: string = 'USDC'): Promise<void> {
+    const transaction: TransactionData = {
+      from: 'EXTERNAL_WALLET',
+      to: agentId,
+      amount,
+      currency,
+      type: 'deposit',
+      timestamp: Date.now()
+    };
+    blockchain.addTransaction(transaction);
+    await blockchain.minePendingTransactions('NODE_OPERATOR_REWARD');
+    await this.save();
   }
 
   public getAllWallets(): Wallet[] {

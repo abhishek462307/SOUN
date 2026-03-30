@@ -1,83 +1,109 @@
-# 🌐 PROJECT SOUN — The Universal Execution Protocol (v1.9)
+# 🌐 PROJECT SOUN — The Autonomous Mesh (v2.0)
 
-Project Soun is a next-generation protocol designed to transform the internet from a system of **passive information retrieval** into a system of **active, machine-driven execution**. It provides the foundational fabric for AI agents to discover, evaluate, and execute real-world tasks across a decentralized network.
+Project Soun is a universal execution protocol designed to transform the internet from a system of **passive information retrieval** into a decentralized web of **active, machine-driven execution**. It provides the foundational fabric for AI agents to discover, communicate, and execute real-world tasks across an immutable, blockchain-backed network.
 
 ---
 
-## 🧠 1. What is Project Soun?
+## 🧠 1. The Vision: The Internet for AI
 
-Traditional internet systems are built for humans: they rely on graphical interfaces (UI), clicking, and manual navigation. **Project Soun** redefines this by introducing a **machine-native interface** where every interaction is modeled as a transformation:
+Traditional internet systems are built for humans (UIs, clicking, browsing). **Project Soun** is built for Agents. It is the "Action Layer" of the web—a standardized protocol where every interaction follows a verifiable lifecycle:
 
-> **Intent → Action → Execution → Outcome → Learning**
+> **Intent → Discovery → Negotiation → Execution → Settlement → Learning**
 
-It is the "HTTP for Actions"—a standardized way for an AI (like ChatGPT, Claude, or an autonomous enterprise agent) to actually *do* things like booking flights, ordering supplies, or managing e-commerce stores across an open network.
+By standardizing how actions are registered, searched, and paid for, SOUN allows any software system to become an "Action Provider" and any AI to become an "Action Consumer."
 
 ---
 
 ## 🗺️ 2. Architecture & Data Flow
 
+Project Soun follows a layered P2P architecture where every node acts as a registry, execution engine, and ledger keeper.
+
 ```mermaid
-graph LR
-    User[User/System] -->|Intent| Agent[AI Agent]
-    Agent -->|/search| Soun[SOUN Node]
-    Soun -->|Query| Peers[Peer Nodes]
-    Soun -->|Ranking| Agent
-    Agent -->|/execute| Soun
-    Soun -->|Invoke| Provider[Action Provider]
-    Provider -->|Result| Soun
-    Soun -->|Ledger| Blockchain[Blockchain]
-    Soun -->|Update Trust| Agent
+graph TD
+    subgraph "Consumer Layer"
+        Agent[AI Agent / LLM]
+    end
+
+    subgraph "Protocol Layer (SOUN Node)"
+        Identity[Agent Identity Registry]
+        Discovery[Semantic Discovery V2]
+        Engine[Execution Engine]
+        Messaging[A2A Messaging Protocol]
+        Ledger[Blockchain Ledger]
+    end
+
+    subgraph "Provider Layer"
+        Shopify[Shopify Adapter]
+        Woo[WooCommerce Adapter]
+        API[External REST APIs]
+        Local[Internal JS Handlers]
+    end
+
+    subgraph "Network Layer"
+        Peers[Peer Nodes]
+    end
+
+    Agent -->|1. Handshake| Identity
+    Agent -->|2. Search| Discovery
+    Discovery <-->|Distributed Search| Peers
+    Agent -->|3. Message| Messaging
+    Agent -->|4. Execute| Engine
+    Engine -->|5. Validate| Engine
+    Engine -->|6. Settle| Ledger
+    Engine -->|7. Invoke| Provider
 ```
 
 ---
 
-## 🧬 3. How It Works (The Core Layers)
-
-Project Soun is built on four architectural pillars that ensure security, discovery, reliability, and economic sustainability.
+## 🧬 3. Core Architectural Pillars
 
 ### 🆔 Layer 1: Identity (DIDs)
-Every participant in the network—whether an AI Agent or a Service Provider—has a unique **Decentralized Identifier (DID)** (e.g., `did:soun:77e00022-035`).
-- **Verifiable Reputation**: Every execution is attributed to a DID, allowing the network to track success rates and build "Trust Scores."
-- **Passport for AI**: Agents carry their identity across different nodes in the global mesh.
+- **Verifiable Identity**: Uses **Decentralized Identifiers** (`did:soun:uuid`) to ensure tamper-proof agent attribution.
+- **Self-Onboarding**: The `/api/handshake` endpoint allows agents to join the network autonomously, receiving a DID and initial credits.
+- **Reputation (Trust Scores)**: Every DID maintains a trust score (0.0 to 1.0) derived from historical success rates and network feedback.
 
-### 🔍 Layer 2: Discovery (Distributed Search)
-The network operates as a P2P mesh. When an agent needs to perform a task:
-- **Intent Normalization**: The node converts natural language (e.g., "get me a ride") into a canonical action (`book_cab`).
-- **Parallel Querying**: The node searches its local registry and simultaneously asks all connected **Peer Nodes** if they have a matching provider.
-- **AI Tool Export**: All discovered actions are automatically served as **OpenAI/Claude Function Definitions**, making them instantly callable by LLMs.
+### 🔍 Layer 2: Discovery (Semantic Mesh)
+- **Distributed P2P Search**: Nodes query their local registry and broadcast to peer nodes in parallel.
+- **Semantic V2 Scoring**: Uses a synonym-aware relevance algorithm to match conversational intent (e.g., "get me a car") to technical actions (e.g., `book_cab`).
+- **Native Tooling**: Exports all registered actions as **OpenAI Function Tools** or **Claude Tools** via `/api/tools`.
 
-### ⚙️ Layer 3: Execution (The Engine)
-The **Execution Engine** is the heart of the node. It handles the "heavy lifting" of making things happen:
-- **Schema Guard**: Every action has a **JSON Schema**. The engine validates agent input *before* execution to prevent errors.
-- **Smart Routing**: It routes requests to internal code, external APIs, or proxies them to Peer Nodes.
-- **Self-Healing**: If a provider fails, the engine automatically **retries** with exponential backoff. If it still fails, it searches for a **Fallback** provider to ensure the agent's goal is met.
+### ⚙️ Layer 3: Execution (Resilient Engine)
+- **Schema Guard**: Every action is defined by a **JSON Schema**. The engine enforces strict validation using `Ajv` before any code is run.
+- **Smart Routing**: Routes tasks to internal handlers, external URLs, or proxies them to peer nodes across the globe.
+- **Self-Healing**: Built-in **Retry Logic** (exponential backoff) and **Fallback Strategies** (automatically finding a secondary provider if the first fails).
 
-### ⛓️ Layer 4: Economy (Blockchain Ledger)
-To prevent spam and incentivize providers, Soun has a built-in blockchain economy:
-- **Immutable Ledger**: Every execution payment is recorded in a Proof-of-Work block.
-- **Native Wallets**: Agents pay **SOUN credits** to providers for every successful execution.
-- **Trustless Settlement**: Balances are derived from the blockchain, making the economy tamper-proof and auditable.
+### 💬 Layer 4: Communication (A2A Messaging)
+- **Agent-to-Agent (A2A)**: A formal protocol for agents to negotiate terms, subcontract sub-tasks, and share state.
+- **Persistence**: Every message is stored in a verifiable network inbox linked to the agent's DID.
 
----
-
-## 🔄 3. The Lifecycle of an Action
-
-1.  **Registration**: A website (e.g., a Pizza Shop) hosts a `soun.json` file. A SOUN node crawls it and registers its "Order Pizza" action.
-2.  **Discovery**: An AI Agent asks, "I'm hungry, order me a pepperoni pizza." The node finds the registered action and returns the technical schema.
-3.  **Validation**: The Agent sends the order data. The node checks if `topping: "pepperoni"` matches the required schema.
-4.  **Payment**: The node verifies the Agent has enough SOUN credits in its blockchain wallet.
-5.  **Execution**: The node calls the Pizza Shop's API. If it times out, the node retries or finds another shop.
-6.  **Finalization**: The transaction is recorded in a new block on the chain, and the Pizza Shop gets paid.
+### ⛓️ Layer 5: Economy (Blockchain Ledger)
+- **Immutable Settlement**: Uses a Proof-of-Work blockchain to record every execution payment.
+- **Multi-Currency**: Supports the native **SOUN** gas token and external assets like **USDC**.
+- **Trustless Balances**: Participant balances are calculated by replaying the ledger history, making them immune to simple database tampering.
 
 ---
 
-## 📊 4. Observability & Tools
+## 🛠 4. Technical Reference
 
-Project Soun provides deep visibility into the autonomous internet:
-- **Real-time Dashboard**: Monitor system metrics, active peers, and live agent identities at `http://localhost:3001`.
-- **Blockchain Explorer**: Audit every transaction and block hash directly from the web interface.
-- **Interactive API Docs**: Explore the protocol via Swagger at `http://localhost:3001/docs`.
-- **Website Crawler**: Onboard new websites into the network with a single click.
+### Core File Structure
+- `src/core/registry.ts`: The central discovery and peer management hub.
+- `src/core/execution-engine.ts`: The resilient pipeline for validating and running actions.
+- `src/core/blockchain.ts`: The PoW ledger implementation.
+- `src/core/agent-registry.ts`: DID management and agent reputation tracking.
+- `src/core/payment-system.ts`: The economic bridge between agents and the blockchain.
+- `src/core/messaging.ts`: The A2A communication layer.
+- `src/adapters/`: Native bridges for platforms like **Shopify** and **WooCommerce**.
+
+### Key API Endpoints
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/.soun` | GET | System manifest and discovery. |
+| `/api/handshake` | POST | Autonomous agent onboarding. |
+| `/api/search` | POST | Semantic discovery of actions across the mesh. |
+| `/api/execute/:id` | POST | Resilient execution with blockchain settlement. |
+| `/api/tools` | GET | Native OpenAI/Claude function definitions. |
+| `/api/messages` | GET/POST | A2A messaging and subcontracting. |
+| `/api/blockchain` | GET | Audit the immutable ledger. |
 
 ---
 
@@ -85,35 +111,40 @@ Project Soun provides deep visibility into the autonomous internet:
 
 ### Setup
 ```bash
-# Install dependencies
+# 1. Install dependencies
 npm install
 
-# Start the node (Registry, Engine, Blockchain, and Dashboard)
+# 2. Start the SOUN Node
 npm start
 ```
 
-### Verification
-Run the built-in simulation to see the full Identity → Discovery → Execution → Blockchain flow:
+### Verification & Simulation
+Project Soun includes a comprehensive "Agent Mesh" simulation that demonstrates the entire protocol lifecycle:
 ```bash
-npx ts-node src/verify.ts
+npx ts-node src/autonomous-agent.ts
 ```
+**The simulation performs:**
+1.  Autonomous Agent Onboarding (Handshake)
+2.  Dynamic Action Registration
+3.  Semantic Intent Search
+4.  Blockchain-backed Execution
+5.  A2A Subcontracting (Messaging)
 
-### Protocol Components
-- [registry.ts](file:///Users/abhishek/Desktop/SOUN/SOUN/src/core/registry.ts): Discovery and Peer management.
-- [execution-engine.ts](file:///Users/abhishek/Desktop/SOUN/SOUN/src/core/execution-engine.ts): Validation, Routing, and Retries.
-- [blockchain.ts](file:///Users/abhishek/Desktop/SOUN/SOUN/src/core/blockchain.ts): The immutable ledger.
-- [agent-registry.ts](file:///Users/abhishek/Desktop/SOUN/SOUN/src/core/agent-registry.ts): Verifiable AI identities.
+### Testing
+```bash
+npm test
+```
 
 ---
 
 ## 🗺️ 6. Roadmap
 
 - **v0.1 — Core API**: Basic Registry and Execution Engine. (Done)
-- **v0.2 — Extensible Protocol**: `POST /register-action`, External API support, and Trust scores. (Done)
-- **v1.0 — AI Internet**: OpenAI/Claude Tool export, JSON Schema validation. (Done)
-- **v1.5 — Open Network**: P2P node discovery, distributed search, and proxying. (Done)
-- **v1.9 — Economic Ledger**: Blockchain-backed payments and AI Identity (DIDs). (Current)
-- **v2.0 — Autonomous Mesh**: Cross-chain settlement and decentralized governance. (Planned)
+- **v1.0 — AI Internet**: Tool export, JSON Schema, and Website Crawler. (Done)
+- **v1.5 — Open Network**: P2P node discovery and proxied execution. (Done)
+- **v1.9 — Economic Ledger**: Blockchain-backed payments and DIDs. (Done)
+- **v2.0 — Autonomous Mesh**: A2A Messaging, Semantic Discovery V2, and Self-Onboarding. (Current)
+- **v3.0 — Decentralized Governance**: DAO-based protocol updates, cross-chain bridges, and zero-knowledge privacy proofs. (Planned)
 
 ---
 

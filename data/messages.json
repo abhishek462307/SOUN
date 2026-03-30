@@ -1,0 +1,14 @@
+[
+  {
+    "id": "msg_93a57b58-8d1",
+    "from_did": "did:soun:1c0c47cc-f7d",
+    "to_did": "did:soun:4776fc0e-47e",
+    "subject": "Resource Verification",
+    "body": {
+      "task_id": "SOUN-123",
+      "status": "requesting_verification"
+    },
+    "status": "sent",
+    "timestamp": 1774869502587
+  }
+]
