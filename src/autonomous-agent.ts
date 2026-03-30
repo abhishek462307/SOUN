@@ -3,6 +3,7 @@ import { agentRegistry } from './core/agent-registry';
 import { executionEngine } from './core/execution-engine';
 import { paymentSystem } from './core/payment-system';
 import { messagingProtocol } from './core/messaging';
+import { realWorldProvider } from './providers/real-world';
 
 /**
  * SIMULATION: An Autonomous AI Agent using Project SOUN
@@ -109,8 +110,39 @@ async function runAutonomousAgent() {
     body: { task_id: 'SOUN-123', status: 'requesting_verification' }
   });
   
-  const inbox = messagingProtocol.getInbox(subAgent.agent_id);
-  console.log(`🤖 [SUB-AGENT] Received message: "${inbox[0].subject}" from ${inbox[0].from_did}`);
+  const notifyInbox = messagingProtocol.getInbox(subAgent.agent_id);
+  console.log(`🤖 [SUB-AGENT] Received message: "${notifyInbox[0].subject}" from ${notifyInbox[0].from_did}`);
+
+  // 7. REAL WORLD: Open-loop execution (Step 4 of Phase 3)
+  console.log('\n🎯 [REALITY] Testing real-world open-loop execution...');
+  const webhookAction = await registry.register({
+    name: 'trigger_webhook',
+    provider: 'external_webhook_service',
+    description: 'Trigger a real-world external webhook',
+    parameters: {
+      type: 'object',
+      properties: {
+        url: { type: 'string', format: 'uri' },
+        payload: { type: 'object' }
+      },
+      required: ['url']
+    },
+    cost: 50,
+    handler: async (input) => realWorldProvider.triggerWebhook(input)
+  });
+
+  console.log('🤖 [AGENT] Executing real-world webhook (Open-Loop)...');
+  // We use a mock URL that will fail or a real one if provided. 
+  // For the demo, we'll use a local mock to ensure it doesn't break without internet.
+  const realRes = await executionEngine.execute(webhookAction.action_id, {
+    url: 'http://httpbin.org/post', // Real public testing endpoint
+    payload: { agent_status: 'operational', protocol: 'SOUN v2.1' }
+  }, 'trigger webhook', { agent_id: agent.agent_id });
+
+  if (realRes.status === 'success') {
+    console.log('✅ [REALITY] Real-world execution succeeded!');
+    console.log('🤖 [AGENT] Remote Response Status:', realRes.data.remote_response);
+  }
 
   console.log('\n🏁 [AGENT] Agent loop finished.');
 }

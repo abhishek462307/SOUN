@@ -1,6 +1,6 @@
 [
   {
-    "action_id": "act_82ad0af0",
+    "action_id": "act_83113503",
     "name": "send_notification",
     "provider": "global_notify_inc",
     "type": "internal",
@@ -39,6 +39,34 @@
       ]
     },
     "cost": 25,
-    "last_execution": 1774869836864
+    "last_execution": 1774870476773
+  },
+  {
+    "action_id": "act_a3be205e",
+    "name": "trigger_webhook",
+    "provider": "external_webhook_service",
+    "type": "internal",
+    "trust_score": 1,
+    "success_count": 1,
+    "failure_count": 0,
+    "latency": "low",
+    "description": "Trigger a real-world external webhook",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "payload": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    },
+    "cost": 50,
+    "last_execution": 1774870478712
   }
 ]

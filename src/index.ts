@@ -48,7 +48,7 @@ app.get('/.soun', (req, res) => {
 // Documentation/Welcome
 app.get('/', (req, res) => {
   res.json({
-    message: 'Welcome to PROJECT SOUN — Universal Execution Protocol API (v1.0)',
+    message: 'Welcome to SOUN (Semantic Orchestration & Universal Network) API (v1.0)',
     discovery: '/.soun',
     endpoints: SOUN_MANIFEST.endpoints
   });
@@ -71,7 +71,7 @@ async function start() {
     messagingProtocol.initialize()
   ]);
   app.listen(port, () => {
-    console.log(`[PROJECT SOUN] Server is running on port ${port}`);
+    console.log(`[SOUN] Semantic Orchestration & Universal Network is running on port ${port}`);
   });
 }
 

@@ -37,8 +37,30 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-// Apply rate limiting and auth to all routes
+// Apply rate limiting to all routes
 router.use(limiter);
+
+/**
+ * @openapi
+ * /api/public/actions:
+ *   get:
+ *     summary: Public discovery of available actions (No Auth)
+ *     responses:
+ *       200:
+ *         description: List of actions available for discovery
+ */
+router.get('/public/actions', (req: Request, res: Response) => {
+  const actions = registry.getAllActions().map(a => ({
+    name: a.name,
+    description: a.description,
+    provider: a.provider,
+    cost: a.cost,
+    trust_score: a.trust_score
+  }));
+  res.json({ actions });
+});
+
+// Apply auth to all subsequent routes
 router.use(authMiddleware);
 
 /**

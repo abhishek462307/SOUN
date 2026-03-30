@@ -14,7 +14,7 @@ export interface SystemManifest {
 
 export const SOUN_MANIFEST: SystemManifest = {
   protocol_version: '1.0.0',
-  system_name: 'PROJECT SOUN',
+  system_name: 'SOUN (Semantic Orchestration & Universal Network)',
   description: 'Universal Execution Protocol for AI Agents',
   endpoints: {
     search: '/api/search',

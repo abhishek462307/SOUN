@@ -1,87 +1,128 @@
-# 🌐 PROJECT SOUN — The Autonomous Mesh (v2.0)
+# 🌐 SOUN — Semantic Orchestration & Universal Network (v2.1)
 
-Project Soun is a universal execution protocol designed to transform the internet from a system of **passive information retrieval** into a decentralized web of **active, machine-driven execution**. It provides the foundational fabric for AI agents to discover, communicate, and execute real-world tasks across an immutable, blockchain-backed network.
+“We’ve built a fully functional prototype of an AI execution network and are now onboarding the first external agents and providers.”
 
----
+SOUN (Semantic Orchestration & Universal Network) is a full-stack execution protocol designed to transform the internet from a system of passive information into a decentralized mesh of autonomous, machine-driven actions.
 
-## 🧠 1. The Vision: The Internet for AI
+It bridges the gap between AI reasoning and real-world execution, evolving from a closed-loop simulation into a globally distributed, open execution network.
 
-Traditional internet systems are built for humans (UIs, clicking, browsing). **Project Soun** is built for Agents. It is the "Action Layer" of the web—a standardized protocol where every interaction follows a verifiable lifecycle:
+⸻
 
-> **Intent → Discovery → Negotiation → Execution → Settlement → Learning**
+## 🧠 1. The Vision — The Action Layer of the Internet
 
-By standardizing how actions are registered, searched, and paid for, SOUN allows any software system to become an "Action Provider" and any AI to become an "Action Consumer."
+The traditional internet is built for:
+- browsing
+- interfaces
+- human interaction
 
----
+SOUN introduces a new primitive:
+
+**Execution as the default interface of the web**
+
+Every interaction follows a deterministic lifecycle:
+
+> Intent → Discovery → Negotiation → Execution → Settlement → Learning
+
+This transforms:
+- APIs → Actions
+- Platforms → Providers
+- Users → Agents
+
+⸻
 
 ## 🗺️ 2. Architecture & Data Flow
 
-Project Soun follows a layered P2P architecture where every node acts as a registry, execution engine, and ledger keeper.
+SOUN operates as a distributed execution mesh, where each node functions as:
+- a registry
+- an execution engine
+- a communication relay
+- a settlement layer
 
 ```mermaid
 graph TD
-    subgraph "Consumer Layer"
+    subgraph Consumer Layer
         Agent[AI Agent / LLM]
     end
 
-    subgraph "Protocol Layer (SOUN Node)"
-        Identity[Agent Identity Registry]
-        Discovery[Semantic Discovery V2]
+    subgraph Protocol Layer SOUN Node
+        Identity[Identity Layer DIDs]
+        Discovery[Semantic Discovery Engine]
         Engine[Execution Engine]
         Messaging[A2A Messaging Protocol]
-        Ledger[Blockchain Ledger]
+        Ledger[Settlement Layer]
     end
 
-    subgraph "Provider Layer"
-        Shopify[Shopify Adapter]
-        Woo[WooCommerce Adapter]
-        API[External REST APIs]
-        Local[Internal JS Handlers]
+    subgraph Provider Layer
+        API[External APIs]
+        Adapters[Platform Adapters]
+        Internal[Local Handlers]
     end
 
-    subgraph "Network Layer"
-        Peers[Peer Nodes]
+    subgraph Network Layer
+        Peers[Distributed Nodes]
     end
 
-    Agent -->|1. Handshake| Identity
-    Agent -->|2. Search| Discovery
-    Discovery <-->|Distributed Search| Peers
-    Agent -->|3. Message| Messaging
-    Agent -->|4. Execute| Engine
-    Engine -->|5. Validate| Engine
-    Engine -->|6. Settle| Ledger
-    Engine -->|7. Invoke| Provider
+    Agent --> Identity
+    Agent --> Discovery
+    Discovery <---> Peers
+    Agent --> Messaging
+    Agent --> Engine
+    Engine --> Ledger
+    Engine --> Provider
 ```
 
----
+⸻
 
 ## 🧬 3. Core Architectural Pillars
 
-### 🆔 Layer 1: Identity (DIDs)
-- **Verifiable Identity**: Uses **Decentralized Identifiers** (`did:soun:uuid`) to ensure tamper-proof agent attribution.
-- **Self-Onboarding**: The `/api/handshake` endpoint allows agents to join the network autonomously, receiving a DID and initial credits.
-- **Reputation (Trust Scores)**: Every DID maintains a trust score (0.0 to 1.0) derived from historical success rates and network feedback.
+### 🆔 Identity Layer (Decentralized Identity System)
 
-### 🔍 Layer 2: Discovery (Semantic Mesh)
-- **Distributed P2P Search**: Nodes query their local registry and broadcast to peer nodes in parallel.
-- **Semantic V2 Scoring**: Uses a synonym-aware relevance algorithm to match conversational intent (e.g., "get me a car") to technical actions (e.g., `book_cab`).
-- **Native Tooling**: Exports all registered actions as **OpenAI Function Tools** or **Claude Tools** via `/api/tools`.
+The identity system ensures that every participant in the network is uniquely identifiable and accountable.
+- Each agent is assigned a Decentralized Identifier (DID)
+- Trust scores evolve based on execution history
+- Identity becomes the foundation for:
+  - trust
+  - permissions
+  - economic participation
 
-### ⚙️ Layer 3: Execution (Resilient Engine)
-- **Schema Guard**: Every action is defined by a **JSON Schema**. The engine enforces strict validation using `Ajv` before any code is run.
-- **Smart Routing**: Routes tasks to internal handlers, external URLs, or proxies them to peer nodes across the globe.
-- **Self-Healing**: Built-in **Retry Logic** (exponential backoff) and **Fallback Strategies** (automatically finding a secondary provider if the first fails).
+### 🔍 Discovery Layer (Semantic Execution Graph)
 
-### 💬 Layer 4: Communication (A2A Messaging)
-- **Agent-to-Agent (A2A)**: A formal protocol for agents to negotiate terms, subcontract sub-tasks, and share state.
-- **Persistence**: Every message is stored in a verifiable network inbox linked to the agent's DID.
+The discovery system maps intent to executable capabilities.
+- Semantic parsing aligns human language to structured actions
+- Distributed querying enables multi-node discovery
+- Ranking is based on:
+  - relevance
+  - trust
+  - performance
 
-### ⛓️ Layer 5: Economy (Blockchain Ledger)
-- **Immutable Settlement**: Uses a Proof-of-Work blockchain to record every execution payment.
-- **Multi-Currency**: Supports the native **SOUN** gas token and external assets like **USDC**.
-- **Trustless Balances**: Participant balances are calculated by replaying the ledger history, making them immune to simple database tampering.
+### ⚙️ Execution Layer (Resilient Orchestration Engine)
 
----
+The execution engine is the core runtime of SOUN.
+- Validates inputs using schema enforcement
+- Routes execution dynamically:
+  - internal
+  - external
+  - peer nodes
+- Implements:
+  - retry logic
+  - fallback providers
+  - execution guarantees
+
+### 💬 Communication Layer (Agent-to-Agent Protocol)
+
+Defines how agents collaborate.
+- negotiation of tasks
+- delegation of sub-actions
+- state synchronization
+
+### ⛓️ Economy Layer (Programmable Settlement)
+
+Ensures trustless value exchange.
+- execution triggers payment
+- ledger maintains immutable history
+- supports multi-asset transactions
+
+⸻
 
 ## 🛠 4. Technical Reference
 
@@ -105,47 +146,198 @@ graph TD
 | `/api/messages` | GET/POST | A2A messaging and subcontracting. |
 | `/api/blockchain` | GET | Audit the immutable ledger. |
 
----
+⸻
 
-## 🏗 5. Developer Guide
+## 🚀 5. Phase 3 — Reality (Current Stage)
 
-### Setup
-```bash
-# 1. Install dependencies
-npm install
+SOUN has transitioned from:
 
-# 2. Start the SOUN Node
-npm start
-```
+simulated execution → real-world interaction
 
-### Verification & Simulation
-Project Soun includes a comprehensive "Agent Mesh" simulation that demonstrates the entire protocol lifecycle:
-```bash
-npx ts-node src/autonomous-agent.ts
-```
-**The simulation performs:**
-1.  Autonomous Agent Onboarding (Handshake)
-2.  Dynamic Action Registration
-3.  Semantic Intent Search
-4.  Blockchain-backed Execution
-5.  A2A Subcontracting (Messaging)
+The system now supports:
+- external API execution
+- agent-driven workflows
+- verifiable transaction logging
 
-### Testing
-```bash
-npm test
-```
+⸻
 
----
+## 🔮 6. FUTURE ROADMAP — THE EVOLUTION OF SOUN
 
-## 🗺️ 6. Roadmap
+This is where we go from prototype → protocol → global infrastructure
 
-- **v0.1 — Core API**: Basic Registry and Execution Engine. (Done)
-- **v1.0 — AI Internet**: Tool export, JSON Schema, and Website Crawler. (Done)
-- **v1.5 — Open Network**: P2P node discovery and proxied execution. (Done)
-- **v1.9 — Economic Ledger**: Blockchain-backed payments and DIDs. (Done)
-- **v2.0 — Autonomous Mesh**: A2A Messaging, Semantic Discovery V2, and Self-Onboarding. (Current)
-- **v3.0 — Decentralized Governance**: DAO-based protocol updates, cross-chain bridges, and zero-knowledge privacy proofs. (Planned)
+⸻
 
----
+### 🧱 PHASE 3 (NOW → NEXT 3 MONTHS)
+**Activation & Real-World Validation**
 
-🚀 **PROJECT SOUN** — Building the foundational fabric for the autonomous AI internet.
+**Objective:**
+Transform Soun from a closed prototype into a live execution network
+
+**Key Focus Areas:**
+
+🔌 **1. External Ecosystem Onboarding**
+- onboard first 10–50 external providers
+- enable plug-and-play action registration
+- create standardized provider SDKs
+
+🤖 **2. Agent Adoption**
+- integrate with:
+  - LLM tool calling
+  - custom agent frameworks
+- enable real agents to use Soun autonomously
+
+📊 **3. Execution Metrics Layer**
+- capture:
+  - execution success rates
+  - latency
+  - cost efficiency
+- feed data back into ranking
+
+🧪 **4. Real Use Case Validation**
+- e-commerce automation
+- API orchestration
+- webhook-based workflows
+
+**Outcome:**
+First real executions outside the system
+
+⸻
+
+### 🌐 PHASE 4 (3–9 MONTHS)
+**Network Formation**
+
+**Objective:**
+Turn Soun into a multi-node distributed system
+
+**Key Focus Areas:**
+
+🌍 **1. Real P2P Infrastructure**
+- replace simulated nodes with real nodes
+- implement:
+  - peer discovery
+  - distributed search
+
+🔗 **2. Cross-Node Execution**
+- allow:
+  - node A → node B execution
+- enable geographic distribution
+
+🧠 **3. Distributed Trust Graph**
+- global reputation system
+- trust propagation across nodes
+
+🔌 **4. Open Developer Platform**
+- SDKs (JS, Python)
+- public API access
+- documentation + onboarding tools
+
+**Outcome:**
+Soun becomes a network, not a product
+
+⸻
+
+### 💳 PHASE 5 (9–18 MONTHS)
+**Economic Layer Maturation**
+
+**Objective:**
+Introduce real, scalable economic infrastructure
+
+**Key Focus Areas:**
+
+💰 **1. Real Payment Integration**
+- integrate:
+  - fiat rails
+  - stablecoins
+- enable real transactions
+
+🧾 **2. Pricing Models**
+- dynamic pricing for actions
+- bidding / marketplace mechanisms
+
+🛡️ **3. Trustless Settlement**
+- escrow systems
+- dispute resolution
+
+📊 **4. Economic Analytics**
+- track:
+  - volume
+  - revenue
+  - provider performance
+
+**Outcome:**
+Soun becomes an economic network
+
+⸻
+
+### 🧬 PHASE 6 (18–36 MONTHS)
+**Autonomous Agent Economy**
+
+**Objective:**
+Enable agents to operate independently within Soun
+
+**Key Focus Areas:**
+
+🤖 **1. Fully Autonomous Agents**
+- agents:
+  - discover
+  - decide
+  - execute
+  - optimize
+
+🔄 **2. Multi-Step Orchestration**
+- workflows composed of multiple actions
+- dynamic chaining
+
+🧠 **3. Learning Systems**
+- reinforcement learning from execution outcomes
+- adaptive decision-making
+
+🌐 **4. Cross-Domain Execution**
+- travel
+- commerce
+- finance
+- enterprise ops
+
+**Outcome:**
+Agents become economic actors
+
+⸻
+
+### 🏛️ PHASE 7 (LONG TERM)
+**Decentralized Governance & Protocol Standardization**
+
+**Objective:**
+Transition Soun into a global standard
+
+**Key Focus Areas:**
+
+🏛️ **1. Protocol Governance**
+- DAO-based upgrades
+- community-driven standards
+
+🔐 **2. Privacy & Security**
+- zero-knowledge proofs
+- secure execution
+
+🌉 **3. Cross-Network Interoperability**
+- integration with other protocols
+- cross-chain execution
+
+📜 **4. Standardization**
+- Soun becomes:
+  - HTTP-equivalent for actions
+
+**Outcome:**
+Soun becomes the default execution layer of the AI Internet
+
+⸻
+
+## 🧬 FINAL STATEMENT
+
+Soun is not just a system—it is the transition of the internet from information to execution.
+
+⸻
+
+## 🚀 CLOSING LINE
+
+“From one node executing actions… to a world where billions of agents transact autonomously.”
