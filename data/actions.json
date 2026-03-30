@@ -22,5 +22,131 @@
     },
     "cost": 10,
     "last_execution": 1774868566638
+  },
+  {
+    "action_id": "act_2c040f1c",
+    "name": "send_notification",
+    "provider": "global_notify_inc",
+    "type": "internal",
+    "trust_score": 0,
+    "success_count": 0,
+    "failure_count": 1,
+    "latency": "low",
+    "description": "Send a secure notification to a specific channel",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "enum": [
+            "email",
+            "slack",
+            "sms"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 5
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "low",
+            "high"
+          ],
+          "default": "low"
+        }
+      },
+      "required": [
+        "channel",
+        "message"
+      ]
+    },
+    "cost": 25,
+    "last_execution": 1774868867907
+  },
+  {
+    "action_id": "act_5ab73dfb",
+    "name": "send_notification",
+    "provider": "global_notify_inc",
+    "type": "internal",
+    "trust_score": 0,
+    "success_count": 0,
+    "failure_count": 1,
+    "latency": "low",
+    "description": "Send a secure notification to a specific channel",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "enum": [
+            "email",
+            "slack",
+            "sms"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 5
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "low",
+            "high"
+          ],
+          "default": "low"
+        }
+      },
+      "required": [
+        "channel",
+        "message"
+      ]
+    },
+    "cost": 25,
+    "last_execution": 1774868867923
+  },
+  {
+    "action_id": "act_5826b3c0",
+    "name": "send_notification",
+    "provider": "global_notify_inc",
+    "type": "internal",
+    "trust_score": 1,
+    "success_count": 1,
+    "failure_count": 0,
+    "latency": "low",
+    "description": "Send a secure notification to a specific channel",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "type": "string",
+          "enum": [
+            "email",
+            "slack",
+            "sms"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 5
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "low",
+            "high"
+          ],
+          "default": "low"
+        }
+      },
+      "required": [
+        "channel",
+        "message"
+      ]
+    },
+    "cost": 25,
+    "last_execution": 1774868886226
   }
 ]

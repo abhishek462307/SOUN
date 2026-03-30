@@ -8,5 +8,38 @@
     "success_rate": 0.5,
     "created_at": 1774868564086,
     "last_active": 1774868564110
+  },
+  {
+    "agent_id": "did:soun:1f333e7d-c09",
+    "name": "AutoBot-9000",
+    "organization": "Autonomous Mesh",
+    "status": "active",
+    "trust_score": 0.5,
+    "total_executions": 0,
+    "success_rate": 0,
+    "created_at": 1774868848559,
+    "last_active": 1774868848559
+  },
+  {
+    "agent_id": "did:soun:6915f029-358",
+    "name": "AutoBot-9000",
+    "organization": "Autonomous Mesh",
+    "status": "active",
+    "trust_score": 0.30000000000000004,
+    "total_executions": 2,
+    "success_rate": 0,
+    "created_at": 1774868866338,
+    "last_active": 1774868867956
+  },
+  {
+    "agent_id": "did:soun:5b0ae2e9-02b",
+    "name": "AutoBot-9000",
+    "organization": "Autonomous Mesh",
+    "status": "active",
+    "trust_score": 0.55,
+    "total_executions": 1,
+    "success_rate": 1,
+    "created_at": 1774868886187,
+    "last_active": 1774868886231
   }
 ]

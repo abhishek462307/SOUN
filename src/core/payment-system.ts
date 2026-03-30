@@ -96,6 +96,9 @@ export class PaymentSystem {
   }
 
   public async processExecutionPayment(agentId: string, providerId: string, actionId: string, amount: number): Promise<boolean> {
+    // Ensure wallet exists (and has initial credits if new)
+    this.getOrCreateWallet(agentId);
+    
     const agentBalance = blockchain.getBalance(agentId);
 
     if (agentBalance < amount) {

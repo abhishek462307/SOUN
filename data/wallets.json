@@ -57,5 +57,22 @@
         "timestamp": 1774868348694
       }
     ]
+  },
+  {
+    "id": "did:soun:5b0ae2e9-02b",
+    "balance": 1000,
+    "currency": "SOUN",
+    "transactions": [
+      {
+        "id": "tx_pending_1774868886221",
+        "from": "GENESIS_REWARD",
+        "to": "did:soun:5b0ae2e9-02b",
+        "amount": 1000,
+        "currency": "SOUN",
+        "type": "deposit",
+        "status": "pending",
+        "timestamp": 1774868886221
+      }
+    ]
   }
 ]

@@ -156,7 +156,9 @@ export class Registry {
       'get me a ride': 'book_cab',
       'book a cab': 'book_cab',
       'order food': 'order_food',
-      'get food': 'order_food'
+      'get food': 'order_food',
+      'notify': 'notification',
+      'message': 'notification'
     };
 
     for (const [key, val] of Object.entries(synonyms)) {

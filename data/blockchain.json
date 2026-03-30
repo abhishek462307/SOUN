@@ -7,6 +7,44 @@
       "previousHash": "0",
       "hash": "f2ca738fdb81f8e3aed41a3a0a7bd5677d2155402a83408a0a7e7f510fd8b30f",
       "nonce": 0
+    },
+    {
+      "index": 1,
+      "timestamp": 1774868886222,
+      "transactions": [
+        {
+          "from": "GENESIS_REWARD",
+          "to": "did:soun:dc389667-73f",
+          "amount": 1000,
+          "type": "deposit",
+          "timestamp": 1774868320758
+        },
+        {
+          "from": "GENESIS_REWARD",
+          "to": "did:soun:c63d8fa3-8d4",
+          "amount": 1000,
+          "type": "deposit",
+          "timestamp": 1774868348694
+        },
+        {
+          "from": "GENESIS_REWARD",
+          "to": "did:soun:5b0ae2e9-02b",
+          "amount": 1000,
+          "type": "deposit",
+          "timestamp": 1774868886221
+        },
+        {
+          "from": "did:soun:5b0ae2e9-02b",
+          "to": "global_notify_inc",
+          "amount": 25,
+          "type": "execution_fee",
+          "action_id": "act_5826b3c0",
+          "timestamp": 1774868886222
+        }
+      ],
+      "previousHash": "f2ca738fdb81f8e3aed41a3a0a7bd5677d2155402a83408a0a7e7f510fd8b30f",
+      "hash": "0051e2822ca21264e5511d07b01c72be24c64c45ba18ee5f8f754fab6a41962d",
+      "nonce": 133
     }
   ],
   "pendingTransactions": [
@@ -23,6 +61,21 @@
       "amount": 1000,
       "type": "deposit",
       "timestamp": 1774868348694
+    },
+    {
+      "from": "GENESIS_REWARD",
+      "to": "did:soun:5b0ae2e9-02b",
+      "amount": 1000,
+      "type": "deposit",
+      "timestamp": 1774868886221
+    },
+    {
+      "from": "did:soun:5b0ae2e9-02b",
+      "to": "global_notify_inc",
+      "amount": 25,
+      "type": "execution_fee",
+      "action_id": "act_5826b3c0",
+      "timestamp": 1774868886222
     }
   ],
   "difficulty": 2

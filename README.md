@@ -14,7 +14,24 @@ It is the "HTTP for Actions"—a standardized way for an AI (like ChatGPT, Claud
 
 ---
 
-## 🧬 2. How It Works (The Core Layers)
+## 🗺️ 2. Architecture & Data Flow
+
+```mermaid
+graph LR
+    User[User/System] -->|Intent| Agent[AI Agent]
+    Agent -->|/search| Soun[SOUN Node]
+    Soun -->|Query| Peers[Peer Nodes]
+    Soun -->|Ranking| Agent
+    Agent -->|/execute| Soun
+    Soun -->|Invoke| Provider[Action Provider]
+    Provider -->|Result| Soun
+    Soun -->|Ledger| Blockchain[Blockchain]
+    Soun -->|Update Trust| Agent
+```
+
+---
+
+## 🧬 3. How It Works (The Core Layers)
 
 Project Soun is built on four architectural pillars that ensure security, discovery, reliability, and economic sustainability.
 
@@ -86,6 +103,17 @@ npx ts-node src/verify.ts
 - [execution-engine.ts](file:///Users/abhishek/Desktop/SOUN/SOUN/src/core/execution-engine.ts): Validation, Routing, and Retries.
 - [blockchain.ts](file:///Users/abhishek/Desktop/SOUN/SOUN/src/core/blockchain.ts): The immutable ledger.
 - [agent-registry.ts](file:///Users/abhishek/Desktop/SOUN/SOUN/src/core/agent-registry.ts): Verifiable AI identities.
+
+---
+
+## 🗺️ 6. Roadmap
+
+- **v0.1 — Core API**: Basic Registry and Execution Engine. (Done)
+- **v0.2 — Extensible Protocol**: `POST /register-action`, External API support, and Trust scores. (Done)
+- **v1.0 — AI Internet**: OpenAI/Claude Tool export, JSON Schema validation. (Done)
+- **v1.5 — Open Network**: P2P node discovery, distributed search, and proxying. (Done)
+- **v1.9 — Economic Ledger**: Blockchain-backed payments and AI Identity (DIDs). (Current)
+- **v2.0 — Autonomous Mesh**: Cross-chain settlement and decentralized governance. (Planned)
 
 ---
 
